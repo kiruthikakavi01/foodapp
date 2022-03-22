@@ -1,10 +1,18 @@
 package com.foodapp.model;
 
 public class Menu {
+	private int id;
 	private String  vegDishes;
 	private int vegDishesPrice;
 	private String nonVegDishes;
 	private int nonVegDishesPrice;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getVegDishes() {
 		return vegDishes;
 	}
@@ -34,6 +42,8 @@ public class Menu {
 		return "Menu [vegDishes=" + vegDishes + ", vegDishesPrice=" + vegDishesPrice + ", nonVegDishes=" + nonVegDishes
 				+ ", nonVegDishesPrice=" + nonVegDishesPrice + "]";
 	}
+	
+		
 	
 	
 }
