@@ -31,17 +31,19 @@ public class Menu {
 	public void setNonVegDishes(String nonVegDishes) {
 		this.nonVegDishes = nonVegDishes;
 	}
+	
 	public int getNonVegDishesPrice() {
 		return nonVegDishesPrice;
 	}
 	public void setNonVegDishesPrice(int nonVegDishesPrice) {
 		this.nonVegDishesPrice = nonVegDishesPrice;
 	}
-	@Override
+	
 	public String toString() {
-		return "Menu [vegDishes=" + vegDishes + ", vegDishesPrice=" + vegDishesPrice + ", nonVegDishes=" + nonVegDishes
-				+ ", nonVegDishesPrice=" + nonVegDishesPrice + "]";
+		return "id"+id+",vegDishes:" + vegDishes + ",vegDishesPrice:" + vegDishesPrice + ",   ------>  nonVegDishes:" + nonVegDishes
+				+ ",nonVegDishesPrice:" + nonVegDishesPrice;
 	}
+	
 	
 		
 	

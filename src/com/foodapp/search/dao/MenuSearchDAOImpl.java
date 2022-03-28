@@ -25,10 +25,11 @@ public class MenuSearchDAOImpl implements MenuSearchDAO {
 		String sql = "select id,Veg_dishes,Veg_Dishes_price,Non_Veg_dishes,Non_Veg_dishes_price from Food_Ordering_App_Menus";
 		statement = connection.prepareStatement(sql);
 		rs = statement.executeQuery();
+		System.err.println("\nId \t\t Veg_Dishes \t\t Veg_Dishes_Price \t\t Non_Veg_Dishes \t\t Non_Veg_Dishes_Price");
 		while (rs.next()) {
 			Integer id = rs.getInt("id");
 			String vegDishes = rs.getString("Veg_dishes");
-			Integer vegDishesPrice = rs.getInt("Veg_Dishes_Price");
+			Integer vegDishesPrice = rs.getInt("Veg_Dishes_price");
 			String nonVegDishes = rs.getString("Non_Veg_dishes");
 			Integer nonVegDishesPrice = rs.getInt("Non_Veg_dishes_price");
 
@@ -38,7 +39,8 @@ public class MenuSearchDAOImpl implements MenuSearchDAO {
 			menuObj.setVegDishesPrice(vegDishesPrice);
 			menuObj.setNonVegDishes(nonVegDishes);
 			menuObj.setNonVegDishesPrice(nonVegDishesPrice);
-
+			System.out.format("\n%d \t\t %s \t\t %d \t\t %s \t\t %d\n", id, vegDishes, vegDishesPrice, nonVegDishes,
+					nonVegDishesPrice);
 			menuList.add(menuObj);
 
 		}
@@ -51,13 +53,13 @@ public class MenuSearchDAOImpl implements MenuSearchDAO {
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet rs = null;
-		Menu menuObj =null;
+		Menu menuObj = null;
 		connection = ConnectionUtil.getConnection();
-		String sql="select * from Food_Ordering_App_Menus where id=?";
-		statement=connection.prepareStatement(sql);
-		statement.setInt(1,id);
-		rs=statement.executeQuery();
-		if(rs.next()) {
+		String sql = "select * from Food_Ordering_App_Menus where id=?";
+		statement = connection.prepareStatement(sql);
+		statement.setInt(1, id);
+		rs = statement.executeQuery();
+		if (rs.next()) {
 			Integer menuId = rs.getInt("id");
 			String vegDishe = rs.getString("Veg_dishes");
 			Integer vegDishesPrice = rs.getInt("Veg_Dishes_Price");
@@ -76,63 +78,76 @@ public class MenuSearchDAOImpl implements MenuSearchDAO {
 
 	@Override
 	public Menu findByVegDishes(String vegDishes) throws SQLException {
-		Connection connection = null;
-		PreparedStatement statement = null;
-		ResultSet rs = null;
-		Menu menuObj =null;
-		connection = ConnectionUtil.getConnection();
-		String sql="SELECT Veg_dishes,Veg_Dishes_price FROM Food_Ordering_App_Menus WHERE Veg_dishes=?";
-		statement=connection.prepareStatement(sql);
-		statement.setString(1,vegDishes);
-		rs=statement.executeQuery();
-		if(rs.next()) {
-			String vegDishe = rs.getString("Veg_dishes");
-			Integer vegDishesPrice = rs.getInt("Veg_Dishes_Price");
+		try {
+			Connection connection = null;
+			PreparedStatement statement = null;
+			ResultSet rs = null;
 
-			menuObj = new Menu();
+			connection = ConnectionUtil.getConnection();
+			String sql = "SELECT id,Veg_dishes,Veg_Dishes_price FROM Food_Ordering_App_Menus WHERE Veg_dishes=?";
+			statement = connection.prepareStatement(sql);
+			statement.setString(1, vegDishes);
+			rs = statement.executeQuery();
+			System.err.println("\nId \t\t Veg_Dishes \t\t Veg_Dishes_Price");
+			if (rs.next()) {
+				Integer id = rs.getInt("id");
+				String vegDishe = rs.getString("Veg_dishes");
+				Integer vegDishesPrice = rs.getInt("Veg_Dishes_Price");
 
-			menuObj.setVegDishes(vegDishe);
-			menuObj.setVegDishesPrice(vegDishesPrice);
-			
+				// menuObj = new Menu();
+				// menuObj.setId(id);
+				// menuObj.setVegDishes(vegDishe);
+				// menuObj.setVegDishesPrice(vegDishesPrice);
+				System.out.format("\n%d \t\t %s \t\t %d\n", id, vegDishe, vegDishesPrice);
+
+			}
+		} catch (Exception e) {
+			System.out.println(e);
 		}
-		return menuObj;
+		return null;
+
 	}
 
 	@Override
 	public Menu findByNonVegDishes(String nonVegDishes) throws SQLException {
-		Connection connection = null;
-		PreparedStatement statement = null;
-		ResultSet rs = null;
-		Menu menuObj =null;
-		connection = ConnectionUtil.getConnection();
-		String sql="SELECT Non_Veg_dishes,Non_Veg_dishes_price FROM Food_Ordering_App_Menus Where Non_Veg_dishes=?";
-		statement=connection.prepareStatement(sql);
-		statement.setString(1,nonVegDishes);
-		rs=statement.executeQuery();
-		if(rs.next()) {
-			
-			String nonVegDishe = rs.getString("Non_Veg_dishes");
-			Integer nonVegDishesPrice = rs.getInt("Non_Veg_dishes_price");
+		try {
 
-			menuObj = new Menu();
-			menuObj.setNonVegDishes(nonVegDishe);
-			menuObj.setNonVegDishesPrice(nonVegDishesPrice);
+			Connection connection = null;
+			PreparedStatement statement = null;
+			ResultSet rs = null;
+
+			connection = ConnectionUtil.getConnection();
+			String sql = "SELECT id,Non_Veg_dishes,Non_Veg_dishes_price FROM Food_Ordering_App_Menus Where Non_Veg_dishes=?";
+			statement = connection.prepareStatement(sql);
+			statement.setString(1, nonVegDishes);
+			rs = statement.executeQuery();
+			System.err.println("\nId \t\t Non_Veg_Dishes \t\t Non_Veg_Dishes_Price");
+			if (rs.next()) {
+				Integer id = rs.getInt("id");
+				String nonVegDishe = rs.getString("Non_Veg_dishes");
+				Integer nonVegDishesPrice = rs.getInt("Non_Veg_dishes_price");
+
+				System.out.format("\n%d \t\t %s \t\t %d\n", id, nonVegDishe, nonVegDishesPrice);
+
+			}
+		} catch (Exception e) {
+			System.out.println(e);
 		}
-		return menuObj;
+		return null;
 	}
 
 	@Override
 	public int count() throws SQLException {
-		Integer count=null;
+		Integer count = null;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet rs = null;
 
 		connection = ConnectionUtil.getConnection();
-		String sql="select count(*) AS cnt from Food_Ordering_App_Menus";
-		statement=connection.prepareStatement(sql);
-		rs=statement.executeQuery();
-		if(rs.next()) {
+		String sql = "select count(*) AS cnt from Food_Ordering_App_Menus";
+		statement = connection.prepareStatement(sql);
+		rs = statement.executeQuery();
+		if (rs.next()) {
 			count = rs.getInt("cnt");
 		}
 		return count;
@@ -141,30 +156,61 @@ public class MenuSearchDAOImpl implements MenuSearchDAO {
 	@Override
 	public List<Menu> displayVegDishes() throws SQLException {
 		// TODO Auto-generated method stub
-				List<Menu> menuList = new ArrayList<Menu>();
-				Connection connection = null;
-				PreparedStatement statement = null;
-				ResultSet rs = null;
+		List<Menu> menuList = new ArrayList<Menu>();
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet rs = null;
 
-				connection = ConnectionUtil.getConnection();
-				String sql = "select Veg_dishes,Veg_Dishes_price from Food_Ordering_App_Menus";
-				statement = connection.prepareStatement(sql);
-				rs = statement.executeQuery();
-				while (rs.next()) {
-					String vegDishes = rs.getString("Veg_dishes");
-					Integer vegDishesPrice = rs.getInt("Veg_Dishes_Price");
-									
-					
-					Menu menuObj = new Menu();
+		connection = ConnectionUtil.getConnection();
+		String sql = "select id,Veg_dishes,Veg_Dishes_price from Food_Ordering_App_Menus";
+		statement = connection.prepareStatement(sql);
+		rs = statement.executeQuery();
+		System.err.println("\nId \t\t Veg_Dishes \t\t Veg_Dishes_Price");
+		while (rs.next()) {
+			Integer id = rs.getInt("id");
+			String vegDishes = rs.getString("Veg_dishes");
+			Integer vegDishesPrice = rs.getInt("Veg_Dishes_Price");
 
-					menuObj.setVegDishes(vegDishes);
-					menuObj.setVegDishesPrice(vegDishesPrice);
-					
+			Menu menuObj = new Menu();
+			menuObj.setId(id);
+			menuObj.setVegDishes(vegDishes);
+			menuObj.setVegDishesPrice(vegDishesPrice);
 
-					menuList.add(menuObj);
+			System.out.format("\n%d \t\t %s \t\t %d\n", id, vegDishes, vegDishesPrice);
+			menuList.add(menuObj);
 
-				}
-				return menuList;
+		}
+		return menuList;
+
+	}
+
+	@Override
+	public List<Menu> displayNonVegdishes() throws SQLException {
+		List<Menu> menuList = new ArrayList<Menu>();
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+
+		connection = ConnectionUtil.getConnection();
+		String sql = "select id,Non_Veg_dishes,Non_Veg_dishes_price FROM Food_Ordering_App_Menus";
+		statement = connection.prepareStatement(sql);
+		rs = statement.executeQuery();
+		System.err.println("\nId \t\t Non_Veg_Dishes \t\t Non_Veg_Dishes_Price");
+		while (rs.next()) {
+			Integer id = rs.getInt("id");
+			String nonVegDishes = rs.getString("Non_Veg_dishes");
+			Integer nonVegDishesPrice = rs.getInt("Non_Veg_dishes_price");
+
+			Menu menuObj = new Menu();
+			menuObj.setId(id);
+			menuObj.setNonVegDishes(nonVegDishes);
+			menuObj.setNonVegDishesPrice(nonVegDishesPrice);
+
+			System.out.format("\n%d \t\t %s \t\t %d\n", id, nonVegDishes, nonVegDishesPrice);
+			menuList.add(menuObj);
+
+		}
+		return menuList;
 
 	}
 }

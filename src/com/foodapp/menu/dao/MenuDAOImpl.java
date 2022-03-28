@@ -3,82 +3,106 @@ package com.foodapp.menu.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
+import java.util.Scanner;
 
 import com.foodapp.model.Menu;
 import com.foodapp.util.ConnectionUtil;
 
 public class MenuDAOImpl implements MenuDAO {
-	
-	
-	
-	/*This method is to add Menus
-	 * */
-	public void menuAdd(Menu menu) throws SQLException, ClassNotFoundException ,NullPointerException{
+
+	/*
+	 * This method is to add Menus
+	 */
+	public void menuAdd() throws SQLException, ClassNotFoundException, NullPointerException {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter the Veg Dish:");
+		String vegDish = sc.next();
+		System.out.println("Enter the Veg Dish Price:");
+		int vegDishPrice = sc.nextInt();
+		System.out.println("Enter the Non Veg Dish:");
+		String nonVegDish = sc.next();
+		System.out.println("Enter the Non Veg Dish Price:");
+		int nonVegDishPrice = sc.nextInt();
+
 		Connection connection = null;
 		PreparedStatement statement = null;
-		int rows=0;
+		int rows = 0;
 		connection = ConnectionUtil.getConnection();
-	    String sql="INSERT INTO Food_Ordering_App_Menus (Veg_dishes,Veg_Dishes_price,Non_Veg_dishes,Non_Veg_dishes_price) VALUES (?,?,?,?)";
-	    statement=connection.prepareStatement(sql);
-	    statement.setString(1,menu.getVegDishes());
-	    statement.setInt(2,menu.getVegDishesPrice());
-	    statement.setString(3,menu.getNonVegDishes());
-	    statement.setInt(4,menu.getNonVegDishesPrice());
-	    System.out.println(sql);
-	    rows=statement.executeUpdate();
-	    System.out.println("No of rows inserted:"+rows);    		
+		String sql = "INSERT INTO Food_Ordering_App_Menus (Veg_dishes,Veg_Dishes_price,Non_Veg_dishes,Non_Veg_dishes_price) VALUES (?,?,?,?)";
+		statement = connection.prepareStatement(sql);
+		statement.setString(1, vegDish);
+		statement.setInt(2, vegDishPrice);
+		statement.setString(3, nonVegDish);
+		statement.setInt(4, nonVegDishPrice);
+		rows = statement.executeUpdate();
+		if (rows == 1) {
+			System.out.println("Menu Inserted Sucessfully");
+		}
 	}
 
-	/*This method is used to update menus
-	 * */
-	   public void menuVegUpdate(Menu menu) throws ClassNotFoundException, SQLException {
+	/*
+	 * This method is used to update menus
+	 */
+	public void menuVegUpdatePrice() throws ClassNotFoundException, SQLException {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter the Veg Dish:");
+		String vegDish = sc.next();
+		System.out.println("Enter the updated price:");
+		int vegDishPrice = sc.nextInt();
 		Connection connection = null;
 		PreparedStatement statement = null;
-		int rows=0;
+		int rows = 0;
 		connection = ConnectionUtil.getConnection();
 		String sql = "UPDATE Food_Ordering_App_Menus SET Veg_Dishes_price= ? Where Veg_dishes= ?";
-	    statement = connection.prepareStatement(sql);
-	    statement.setInt(1,menu.getVegDishesPrice());
-	    statement.setString(2,menu.getVegDishes());
-		System.out.println(sql);
+		statement = connection.prepareStatement(sql);
+		statement.setInt(1, vegDishPrice);
+		statement.setString(2, vegDish);
 		rows = statement.executeUpdate();
-		System.out.println("No of rows Update:" + rows);
+		if(rows==1) {
+			System.out.println("Veg Menu Updated Sucessfully");
+		}
 
-		
 	}
 
 	@Override
-	public void menuNonVegUpdate(Menu menu) throws ClassNotFoundException, SQLException {
+	public void menuNonVegUpdatePrice() throws ClassNotFoundException, SQLException {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter the Non Veg Dish:");
+		String nonVegDish = sc.next();
+		System.out.println("Enter the updated price:");
+		int nonVegDishPrice = sc.nextInt();
 		Connection connection = null;
 		PreparedStatement statement = null;
-		int rows=0;
+		int rows = 0;
 		connection = ConnectionUtil.getConnection();
 		String sql = "UPDATE Food_Ordering_App_Menus SET Non_Veg_dishes_price= ? Where Non_Veg_dishes= ?";
-	    statement = connection.prepareStatement(sql);
-	    statement.setInt(1,menu.getNonVegDishesPrice());
-	    statement.setString(2,menu.getNonVegDishes());
-		System.out.println(sql);
+		statement = connection.prepareStatement(sql);
+		statement.setInt(1,nonVegDishPrice);
+		statement.setString(2,nonVegDish);
 		rows = statement.executeUpdate();
-		System.out.println("No of rows Update:" + rows);
+		if(rows==1) {
+			System.out.println("Non Veg Menu Updated Sucessfully");
+		}
 
-		
 	}
 
 	@Override
-	public void menuDelete(Menu menu) throws ClassNotFoundException, SQLException {
+	public void menuDelete() throws ClassNotFoundException, SQLException {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter the Menu id:");
+		int menuId= sc.nextInt();
 		Connection connection = null;
 		PreparedStatement statement = null;
-		int rows=0;
+		int rows = 0;
 		connection = ConnectionUtil.getConnection();
 		String sql = "DELETE FROM Food_Ordering_App_Menus WHERE id=?";
-	    statement = connection.prepareStatement(sql);
-	    statement.setInt(1,menu.getId());
-		System.out.println(sql);
+		statement = connection.prepareStatement(sql);
+		statement.setInt(1,menuId);
 		rows = statement.executeUpdate();
-		System.out.println("No of rows Deleted:" + rows);
-		
+		if(rows==1) {
+			System.out.println("Menu deleted Sucessfully");
+		}
+
 	}
-	
 
 }

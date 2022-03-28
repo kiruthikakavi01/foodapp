@@ -19,5 +19,6 @@ public interface MenuSearchDAO {
 	//select Veg_dishes,Veg_Dishes_price FROM Food_Ordering_App_Menus;
 	List<Menu> displayVegDishes() throws SQLException;
 	//select Non_Veg_dishes,Non_Veg_dishes_price FROM Food_Ordering_App_Menus;
+	List<Menu> displayNonVegdishes() throws SQLException;
 	
 }

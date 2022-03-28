@@ -1,7 +1,7 @@
 package com.foodapp.model;
 
 import java.util.List;
-
+import java.util.Scanner;
 
 import com.foodapp.menu.dao.MenuDAO;
 import com.foodapp.menu.dao.MenuDAOImpl;
@@ -10,20 +10,32 @@ import com.foodapp.search.dao.MenuSearchDAOImpl;
 
 public class MenuTest {
 	public static void main(String[] args) throws Exception {
+		Scanner sc=new Scanner(System.in);
 		Menu menu = new Menu();
-		menu.setId(8);
-		menu.setVegDishes("Dosa");
-		menu.setVegDishesPrice(100);
-		menu.setNonVegDishes("Chicken 65");
-		menu.setNonVegDishesPrice(100);
-		//System.out.println(menu);
-		//MenuDAO menuDAO = new MenuDAOImpl();
-		//menuDAO.menuDelete(menu);
-		MenuSearchDAO menuSearch=new MenuSearchDAOImpl();
-		/*List<Menu> menuList=menuSearch.findAll();
+		System.out.println("Enter the veg dish: ");
+		String vegName=sc.next();
+		System.out.println("Enter the veg dish price: ");
+		int vegPrice=sc.nextInt();
+		System.out.println("Enter the nonVeg dish: ");
+		String nonVegName=sc.next();
+		System.out.println("Enter the nonVeg dish price: ");
+		int nonVegPrice=sc.nextInt();
+		
+		
+		//menu.setId(3);
+		menu.setVegDishes(vegName);
+		menu.setVegDishesPrice(vegPrice);
+		
+		menu.setNonVegDishes(nonVegName);
+		menu.setNonVegDishesPrice(nonVegPrice);
+		System.out.println(menu);
+		MenuDAO menuDAO = new MenuDAOImpl();
+		//menuDAO.menuAdd(menu);
+		/*MenuSearchDAO menuSearch=new MenuSearchDAOImpl();
+		List<Menu> menuList=menuSearch.findAll();
 		for(Menu menuLists:menuList) {
 			System.out.println(menuLists);
-		}*/
+		}
 		
 		menu=menuSearch.findByVegDishes("Dosa");
 		System.out.println(menu);
@@ -39,7 +51,7 @@ public class MenuTest {
 		List<Menu> menuVegList=menuSearch.displayVegDishes();
 		for(Menu menuLists:menuVegList) {
 			System.out.println(menuLists);
-		}
+		}*/
 		
 	}
 

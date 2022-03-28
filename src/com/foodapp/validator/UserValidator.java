@@ -5,10 +5,11 @@ import com.foodapp.model.User;
 public class UserValidator {
 	/*This method is used to validate the user details*/
 	public static void validatorUserDetails(User user) throws Exception {
+		try {
 		if(user.getName() == null) {
 			throw new Exception("Invalid Name");
 		}
-		else if(user.getEmail()== null) {
+		else if(user.getEmail()== null|| !(user.getEmail()).contains("@gmail.com")) {
 			throw new Exception("Invalid Email");
 		}
 		else if(user.getContactNumber().length()!=10) {
@@ -23,10 +24,17 @@ public class UserValidator {
 		else if(user.getConformPassword()==null) {
 			throw new Exception("Invalid conform password");
 		}
-		else if(user.getConformPassword()!=user.getCreatePassword()) {
+		else if(!user.getConformPassword().equals(user.getCreatePassword())) {
 			throw new Exception("Password not match");
 		}
-		System.out.println("Validation Passed");
+		
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage());
+			System.out.println("Once again register plss..");
+			
+			UserValidatorRegister.userRegister();
+		}
 		
 	}
 }
